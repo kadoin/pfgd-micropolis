@@ -44,8 +44,8 @@ public class BudgetDialog extends JDialog
 
 	static ResourceBundle strings = MainWindow.strings;
 
-	JCheckBox autoBudgetBtn = new JCheckBox(strings.getString("budgetdlg.auto_budget"));
-	JCheckBox pauseBtn = new JCheckBox(strings.getString("budgetdlg.pause_game"));
+	JCheckBox autoBudgetBtn = new JCheckBox(strings.getString("budgetdlg.wop"));//auto_budget"));
+	JCheckBox pauseBtn = new JCheckBox(strings.getString("budgetdlg.wop"));//.pause_game"));
 
 	private void applyChange()
 	{
@@ -96,7 +96,7 @@ public class BudgetDialog extends JDialog
 	public BudgetDialog(Window owner, Micropolis engine)
 	{
 		super(owner);
-		setTitle(strings.getString("budgetdlg.title"));
+		setTitle(strings.getString("budgetdlg.wop"));//title"));
 
 		this.engine = engine;
 		this.origTaxRate = engine.cityTax;
@@ -143,20 +143,25 @@ public class BudgetDialog extends JDialog
 
 		JSeparator sep2 = new JSeparator(SwingConstants.HORIZONTAL);
 		mainBox.add(sep2);
+		
+		mainBox.add(makeConsultantPane());
+		
+		JSeparator sep3 = new JSeparator(SwingConstants.HORIZONTAL);
+		mainBox.add(sep3);
 
 		mainBox.add(makeOptionsPane());
 
 		JPanel buttonPane = new JPanel();
 		add(buttonPane, BorderLayout.SOUTH);
 
-		JButton continueBtn = new JButton(strings.getString("budgetdlg.continue"));
+		JButton continueBtn = new JButton(strings.getString("budgetdlg.wop"));//continue"));
 		continueBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				onContinueClicked();
 			}});
 		buttonPane.add(continueBtn);
 
-		JButton resetBtn = new JButton(strings.getString("budgetdlg.reset"));
+		JButton resetBtn = new JButton(strings.getString("budgetdlg.wop"));//reset"));
 		resetBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				onResetClicked();
@@ -212,29 +217,56 @@ public class BudgetDialog extends JDialog
 		c3.anchor = GridBagConstraints.EAST;
 
 		c1.gridy = c2.gridy = c3.gridy = 0;
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.funding_level_hdr")), c1);
+		/*fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.funding_level_hdr")), c1);
 		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.requested_hdr")), c2);
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.allocation_hdr")), c3);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.allocation_hdr")), c3);*/
+		
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c1);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c2);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c3);
 
 		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 1;
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.road_fund")), c0);
+		//fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.road_fund")), c0);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);
 		fundingRatesPane.add(roadFundEntry, c1);
 		fundingRatesPane.add(roadFundRequest, c2);
 		fundingRatesPane.add(roadFundAlloc, c3);
 
 		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 2;
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.police_fund")), c0);
+		//fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.police_fund")), c0);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);
 		fundingRatesPane.add(policeFundEntry, c1);
 		fundingRatesPane.add(policeFundRequest, c2);
 		fundingRatesPane.add(policeFundAlloc, c3);
 
 		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 3;
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.fire_fund")), c0);
+		//fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.fire_fund")), c0);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);
 		fundingRatesPane.add(fireFundEntry, c1);
 		fundingRatesPane.add(fireFundRequest, c2);
 		fundingRatesPane.add(fireFundAlloc, c3);
 
 		return fundingRatesPane;
+	}
+	
+	private JComponent makeConsultantPane()
+	{
+		JPanel consultantPane = new JPanel(new GridBagLayout());
+		consultantPane.setBorder(BorderFactory.createEmptyBorder(8,0,0,0));
+		
+		GridBagConstraints c0 = new GridBagConstraints();
+		GridBagConstraints c1 = new GridBagConstraints();
+
+		c0.gridx = 0;
+		c1.gridx = 1;
+		c0.anchor = c1.anchor = GridBagConstraints.WEST;
+		c0.gridy = c1.gridy = 0;
+		c0.weightx = c1.weightx = 0.5;
+		
+		c0.gridy = c1.gridy = 0;
+		consultantPane.add(new JLabel(strings.getString("budgetdlg.wopaloo")), c0);
+		
+		return consultantPane;
 	}
 
 	private JComponent makeOptionsPane()
@@ -279,11 +311,14 @@ public class BudgetDialog extends JDialog
 		c2.weightx = 0.5;
 
 		c0.gridy = c1.gridy = c2.gridy = 0;
-		pane.add(new JLabel(strings.getString("budgetdlg.tax_rate_hdr")), c1);
-		pane.add(new JLabel(strings.getString("budgetdlg.annual_receipts_hdr")), c2);
+		//pane.add(new JLabel(strings.getString("budgetdlg.tax_rate_hdr")), c1);
+		//pane.add(new JLabel(strings.getString("budgetdlg.annual_receipts_hdr")), c2);
+		pane.add(new JLabel(strings.getString("budgetdlg.wop")), c1);
+		pane.add(new JLabel(strings.getString("budgetdlg.wop")), c2);
 
 		c0.gridy = c1.gridy = c2.gridy = 1;
-		pane.add(new JLabel(strings.getString("budgetdlg.tax_revenue")), c0);
+		//pane.add(new JLabel(strings.getString("budgetdlg.tax_revenue")), c0);
+		pane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);
 		pane.add(taxRateEntry, c1);
 		pane.add(taxRevenueLbl, c2);
 
@@ -327,7 +362,7 @@ public class BudgetDialog extends JDialog
 		c0.gridx = 0;
 		c0.gridy = 0;
 
-		JLabel thLbl = new JLabel(strings.getString("budgetdlg.period_ending"));
+		JLabel thLbl = new JLabel(strings.getString("budgetdlg.wop"));//period_ending"));
 		Font origFont = thLbl.getFont();
 		Font headFont = origFont.deriveFont(Font.ITALIC);
 		thLbl.setFont(headFont);
@@ -335,15 +370,15 @@ public class BudgetDialog extends JDialog
 		balancePane.add(thLbl, c0);
 
 		c0.gridy++;
-		balancePane.add(new JLabel(strings.getString("budgetdlg.cash_begin")), c0);
+		balancePane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);//cash_begin")), c0);
 		c0.gridy++;
-		balancePane.add(new JLabel(strings.getString("budgetdlg.taxes_collected")), c0);
+		balancePane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);//taxes_collected")), c0);
 		c0.gridy++;
-		balancePane.add(new JLabel(strings.getString("budgetdlg.capital_expenses")), c0);
+		balancePane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);//capital_expenses")), c0);
 		c0.gridy++;
-		balancePane.add(new JLabel(strings.getString("budgetdlg.operating_expenses")), c0);
+		balancePane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);//operating_expenses")), c0);
 		c0.gridy++;
-		balancePane.add(new JLabel(strings.getString("budgetdlg.cash_end")), c0);
+		balancePane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);//cash_end")), c0);
 
 		c1.anchor = GridBagConstraints.EAST;
 		c1.weightx = 0.25;
