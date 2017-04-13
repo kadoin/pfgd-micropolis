@@ -25,8 +25,10 @@ import micropolisj.engine.*;
 import micropolisj.util.TranslationTool;
 
 public class MainWindow extends JFrame
+	
 	implements Micropolis.Listener, EarthquakeListener
 {
+	static ResourceBundle cityMessageStrings = ResourceBundle.getBundle("micropolisj.CityMessages");
 	Micropolis engine;
 	MicropolisDrawingArea drawingArea;
 	JScrollPane drawingAreaScroll;
@@ -51,6 +53,8 @@ public class MainWindow extends JFrame
 	boolean dirty2 = false;  //indicates if simulator took a step since last save
 	long lastSavedTime = 0;  //real-time clock of when file was last saved
 	boolean autoBudgetPending;
+	
+
 
 	static ImageIcon appIcon;
 	static {
@@ -1377,6 +1381,7 @@ public class MainWindow extends JFrame
 				if (!engine.autoBudget && engine.isBudgetTime())
 				{
 					showAutoBudget();
+					engine.disasterCount = 0;
 					return;
 				}
 			}
@@ -1551,6 +1556,8 @@ public class MainWindow extends JFrame
 	{
 		fundsLbl.setText(formatFunds(getEngine().budget.totalFunds));
 	}
+	
+	
 
 	//implements Micropolis.Listener
 	public void cityMessage(MicropolisMessage m, CityLocation p)

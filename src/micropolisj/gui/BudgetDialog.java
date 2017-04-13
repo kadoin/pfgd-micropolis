@@ -44,8 +44,10 @@ public class BudgetDialog extends JDialog
 
 	static ResourceBundle strings = MainWindow.strings;
 
-	JCheckBox autoBudgetBtn = new JCheckBox(strings.getString("budgetdlg.wop"));//auto_budget"));
-	JCheckBox pauseBtn = new JCheckBox(strings.getString("budgetdlg.wop"));//.pause_game"));
+	JCheckBox autoBudgetBtn = new JCheckBox(strings.getString("budgetdlg.auto_budget"));
+	JCheckBox pauseBtn = new JCheckBox(strings.getString("budgetdlg.pause_game"));
+	
+
 
 	private void applyChange()
 	{
@@ -96,7 +98,7 @@ public class BudgetDialog extends JDialog
 	public BudgetDialog(Window owner, Micropolis engine)
 	{
 		super(owner);
-		setTitle(strings.getString("budgetdlg.wop"));//title"));
+		setTitle(strings.getString("budgetdlg.title"));
 
 		this.engine = engine;
 		this.origTaxRate = engine.cityTax;
@@ -154,14 +156,14 @@ public class BudgetDialog extends JDialog
 		JPanel buttonPane = new JPanel();
 		add(buttonPane, BorderLayout.SOUTH);
 
-		JButton continueBtn = new JButton(strings.getString("budgetdlg.wop"));//continue"));
+		JButton continueBtn = new JButton(strings.getString("budgetdlg.continue"));
 		continueBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				onContinueClicked();
 			}});
 		buttonPane.add(continueBtn);
 
-		JButton resetBtn = new JButton(strings.getString("budgetdlg.wop"));//reset"));
+		JButton resetBtn = new JButton(strings.getString("budgetdlg.reset"));
 		resetBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				onResetClicked();
@@ -217,37 +219,38 @@ public class BudgetDialog extends JDialog
 		c3.anchor = GridBagConstraints.EAST;
 
 		c1.gridy = c2.gridy = c3.gridy = 0;
-		/*fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.funding_level_hdr")), c1);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.funding_level_hdr")), c1);
 		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.requested_hdr")), c2);
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.allocation_hdr")), c3);*/
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.allocation_hdr")), c3);
 		
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c1);
+		/*fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c1);
 		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c2);
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c3);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c3);*/
 
 		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 1;
-		//fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.road_fund")), c0);
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.road_fund")), c0);
+		//fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);
 		fundingRatesPane.add(roadFundEntry, c1);
 		fundingRatesPane.add(roadFundRequest, c2);
 		fundingRatesPane.add(roadFundAlloc, c3);
 
 		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 2;
-		//fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.police_fund")), c0);
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.police_fund")), c0);
+		//fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);
 		fundingRatesPane.add(policeFundEntry, c1);
 		fundingRatesPane.add(policeFundRequest, c2);
 		fundingRatesPane.add(policeFundAlloc, c3);
 
 		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 3;
-		//fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.fire_fund")), c0);
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.fire_fund")), c0);
+		//fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);
 		fundingRatesPane.add(fireFundEntry, c1);
 		fundingRatesPane.add(fireFundRequest, c2);
 		fundingRatesPane.add(fireFundAlloc, c3);
 
 		return fundingRatesPane;
 	}
+	
 	
 	private JComponent makeConsultantPane()
 	{
@@ -256,15 +259,127 @@ public class BudgetDialog extends JDialog
 		
 		GridBagConstraints c0 = new GridBagConstraints();
 		GridBagConstraints c1 = new GridBagConstraints();
-
+		GridBagConstraints c2 = new GridBagConstraints();
 		c0.gridx = 0;
-		c1.gridx = 1;
-		c0.anchor = c1.anchor = GridBagConstraints.WEST;
-		c0.gridy = c1.gridy = 0;
-		c0.weightx = c1.weightx = 0.5;
+		c1.gridx = 0;
+		c2.gridx = 2;
+		c0.anchor = c1.anchor = c2.anchor = GridBagConstraints.WEST;
+		c0.weightx = c1.weightx = c2.weightx = 0.5;
 		
-		c0.gridy = c1.gridy = 0;
-		consultantPane.add(new JLabel(strings.getString("budgetdlg.wopaloo")), c0);
+		c0.gridy = c1.gridy = 0; //pane title
+		consultantPane.add(new JLabel(strings.getString("budgetdlg.fireName")), c1);
+		
+		c0.gridy = c1.gridy = 1; //fire chief icon
+		java.net.URL firePNG = null;
+		String fireMan = strings.getString("budgetdlg.fireChief");
+		firePNG = MainWindow.class.getResource(fireMan);
+		consultantPane.add(new JLabel(new ImageIcon(firePNG)), c1);
+		
+		c0.gridy = c1.gridy = 2; //pane title
+		consultantPane.add(new JLabel(strings.getString("budgetdlg.policeName")), c1);
+		
+		c0.gridy = c1.gridy = 3; //police chief icon
+		java.net.URL policePNG = null;
+		String policeMan = strings.getString("budgetdlg.policeChief");
+		policePNG = MainWindow.class.getResource(policeMan);
+		consultantPane.add(new JLabel(new ImageIcon(policePNG)), c1);
+		
+		c0.gridy = c1.gridy = 4; //pane title
+		consultantPane.add(new JLabel(strings.getString("budgetdlg.citizen1Name")), c1);
+		
+		c0.gridy = c1.gridy = 5; //citizen1 icon
+		java.net.URL citizen1PNG = null;
+		String citizen1 = strings.getString("budgetdlg.citizen1");
+		citizen1PNG = MainWindow.class.getResource(citizen1);
+		consultantPane.add(new JLabel(new ImageIcon(citizen1PNG)), c1);
+		
+		c0.gridy = c1.gridy = 6; //pane title
+		consultantPane.add(new JLabel(strings.getString("budgetdlg.citizen2Name")), c1);
+		
+		c0.gridy = c1.gridy = 7; //betsy icon
+		java.net.URL citizen2PNG = null;
+		String citizen2 = strings.getString("budgetdlg.citizen2");
+		citizen2PNG = MainWindow.class.getResource(citizen2);
+		consultantPane.add(new JLabel(new ImageIcon(citizen2PNG)), c1);
+		
+		
+		//Enviornmental Dialogue based on pollution
+		c0.gridy = c1.gridy= c2.gridy = 7;
+		if (engine.pollutionAverage > 60){
+			JLabel betsyTalk = new JLabel("<html>The air is SO thick with all the pollution!<br>I haven't seen the sun in months!</html>");
+			betsyTalk.setForeground(Color.GREEN);
+			consultantPane.add(betsyTalk, c2);
+		}
+		else if (engine.pollutionAverage <= 60 && engine.pollutionAverage > 30){
+			JLabel betsyTalk = new JLabel("<html>It's been looking pretty smoggy around town<br>lately. I'm starting to get a cough.</html>");
+			betsyTalk.setForeground(Color.GREEN);
+			consultantPane.add(betsyTalk, c2);
+		}
+		else if (engine.pollutionAverage <= 30){
+			JLabel betsyTalk = new JLabel("What nice clean air we have in this town!");
+			betsyTalk.setForeground(Color.GREEN);
+			consultantPane.add(betsyTalk, c2);
+		}
+		//Police chiefs dialogue based on crime
+		c2.gridy = 3;
+		if (engine.crimeAverage > 100){
+			JLabel policeTalk = new JLabel("<html>We're doing our best but the crime ring taking<br>hold of the city. Serious changes need to be made.</html>");
+			policeTalk.setForeground(Color.BLUE);
+			consultantPane.add(policeTalk, c2);
+		}
+		else if (engine.crimeAverage < 100 && engine.crimeAverage >= 50){
+			JLabel policeTalk = new JLabel("<html>Crime is on the rise, but we're able to<br>cover it... for now.</html>");
+			policeTalk.setForeground(Color.BLUE);
+			consultantPane.add(policeTalk, c2);
+		}
+		else if (engine.crimeAverage<50){
+			JLabel policeTalk = new JLabel("<html>Nothing but a few minor infractions and parking<br>tickets. This is one safe city!</html>");
+			policeTalk.setForeground(Color.BLUE);
+			consultantPane.add(policeTalk, c2);
+		}
+		
+		
+		//police chiefs dialogue options based on disasters
+		c2.gridy = 1;
+		if (engine.disasterCount >=3){
+			JLabel fireTalk = new JLabel("<html>This city has face a lot of disasters this<br>year. How can we be more prepared?</html>");
+			fireTalk.setForeground(Color.RED);
+			consultantPane.add(fireTalk, c2);
+		}
+		else if (engine.disasterCount == 2){
+			JLabel fireTalk = new JLabel("<html>There were a couple close call emergencies,<br>but we always manage to pull through.</html>");
+			fireTalk.setForeground(Color.RED);
+			consultantPane.add(fireTalk, c2);
+		}
+		else if (engine.disasterCount <=1){
+			JLabel fireTalk = new JLabel("<html>It's been pretty boring around the station.<br>Guess that's a good thing.</html>");
+			fireTalk.setForeground(Color.RED);
+			consultantPane.add(fireTalk, c2);
+		}
+		
+		
+		// John's dialogue depending on a lot of different things. He's an all over the place kind of guy
+		c2.gridy = 5;
+		if (engine.lastCityPop == 0){
+			JLabel johnTalk = new JLabel("<html>Umm... No one lives here. I don't even live here.<br>Why is everyone talking like this is an actual town?</html>");
+			johnTalk.setForeground(Color.ORANGE);
+			consultantPane.add(johnTalk, c2);
+		}
+		else if (engine.power==false){
+			JLabel johnTalk = new JLabel("<html>There's no power! Nothing works without power!<br>How can I watch my anime?!?</html>");
+			johnTalk.setForeground(Color.ORANGE);
+			consultantPane.add(johnTalk, c2);
+		}
+		else if (engine.trafficAverage > 60){
+			JLabel johnTalk = new JLabel("Dude, the traffic here sucks.");
+			johnTalk.setForeground(Color.ORANGE);
+			consultantPane.add(johnTalk, c2);
+		}
+		else{
+			JLabel johnTalk = new JLabel("This city is ok I guess.");
+			johnTalk.setForeground(Color.ORANGE);
+			consultantPane.add(johnTalk, c2);
+		}
 		
 		return consultantPane;
 	}
@@ -282,7 +397,7 @@ public class BudgetDialog extends JDialog
 		c0.anchor = c1.anchor = GridBagConstraints.WEST;
 		c0.gridy = c1.gridy = 0;
 		c0.weightx = c1.weightx = 0.5;
-		optionsPane.add(autoBudgetBtn, c0);
+		//optionsPane.add(autoBudgetBtn, c0);			Took this out so the yearly report is forced to show up
 		optionsPane.add(pauseBtn, c1);
 
 		autoBudgetBtn.setSelected(engine.autoBudget);
@@ -311,14 +426,14 @@ public class BudgetDialog extends JDialog
 		c2.weightx = 0.5;
 
 		c0.gridy = c1.gridy = c2.gridy = 0;
-		//pane.add(new JLabel(strings.getString("budgetdlg.tax_rate_hdr")), c1);
-		//pane.add(new JLabel(strings.getString("budgetdlg.annual_receipts_hdr")), c2);
-		pane.add(new JLabel(strings.getString("budgetdlg.wop")), c1);
-		pane.add(new JLabel(strings.getString("budgetdlg.wop")), c2);
+		pane.add(new JLabel(strings.getString("budgetdlg.tax_rate_hdr")), c1);
+		pane.add(new JLabel(strings.getString("budgetdlg.annual_receipts_hdr")), c2);
+		//pane.add(new JLabel(strings.getString("budgetdlg.wop")), c1);
+		//pane.add(new JLabel(strings.getString("budgetdlg.wop")), c2);
 
 		c0.gridy = c1.gridy = c2.gridy = 1;
-		//pane.add(new JLabel(strings.getString("budgetdlg.tax_revenue")), c0);
-		pane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);
+		pane.add(new JLabel(strings.getString("budgetdlg.tax_revenue")), c0);
+		//pane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);
 		pane.add(taxRateEntry, c1);
 		pane.add(taxRevenueLbl, c2);
 
@@ -362,7 +477,7 @@ public class BudgetDialog extends JDialog
 		c0.gridx = 0;
 		c0.gridy = 0;
 
-		JLabel thLbl = new JLabel(strings.getString("budgetdlg.wop"));//period_ending"));
+		JLabel thLbl = new JLabel(strings.getString("budgetdlg.period_ending"));
 		Font origFont = thLbl.getFont();
 		Font headFont = origFont.deriveFont(Font.ITALIC);
 		thLbl.setFont(headFont);
@@ -370,15 +485,15 @@ public class BudgetDialog extends JDialog
 		balancePane.add(thLbl, c0);
 
 		c0.gridy++;
-		balancePane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);//cash_begin")), c0);
+		balancePane.add(new JLabel(strings.getString("budgetdlg.cash_begin")), c0);
 		c0.gridy++;
-		balancePane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);//taxes_collected")), c0);
+		balancePane.add(new JLabel(strings.getString("budgetdlg.taxes_collected")), c0);
 		c0.gridy++;
-		balancePane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);//capital_expenses")), c0);
+		balancePane.add(new JLabel(strings.getString("budgetdlg.capital_expenses")), c0);
 		c0.gridy++;
-		balancePane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);//operating_expenses")), c0);
+		balancePane.add(new JLabel(strings.getString("budgetdlg.operating_expenses")), c0);
 		c0.gridy++;
-		balancePane.add(new JLabel(strings.getString("budgetdlg.wop")), c0);//cash_end")), c0);
+		balancePane.add(new JLabel(strings.getString("budgetdlg.cash_end")), c0);
 
 		c1.anchor = GridBagConstraints.EAST;
 		c1.weightx = 0.25;

@@ -105,6 +105,7 @@ public class Micropolis
 	boolean autoGo;
 
 	// census numbers, reset in phase 0 of each cycle, summed during map scan
+	public int disasterCount=0;
 	int poweredZoneCount;
 	int unpoweredZoneCount;
 	int roadTotal;
@@ -127,7 +128,7 @@ public class Micropolis
 	int airportCount;
 
 	int totalPop;
-	int lastCityPop;
+	public int lastCityPop;
 
 	// used in generateBudget()
 	int lastRoadTotal;
@@ -150,10 +151,11 @@ public class Micropolis
 	int needHospital; // -1 too many already, 0 just right, 1 not enough
 	int needChurch;   // -1 too many already, 0 just right, 1 not enough
 
-	int crimeAverage;
-	int pollutionAverage;
+	public int crimeAverage;
+	public int pollutionAverage;
 	int landValueAverage;
-	int trafficAverage;
+	public int trafficAverage;
+	public boolean power = false;
 
 	int resValve;   // ranges between -2000 and 2000, updated by setValves
 	int comValve;   // ranges between -1500 and 1500
@@ -899,23 +901,29 @@ public class Micropolis
 		case 0:
 		case 1:
 			setFire();
+			
 			break;
 		case 2:
 		case 3:
 			makeFlood();
+			disasterCount++;
 			break;
 		case 4:
+			disasterCount++;
 			break;
 		case 5:
 			makeTornado();
+			disasterCount++;
 			break;
 		case 6:
 			makeEarthquake();
+			disasterCount++;
 			break;
 		case 7:
 		case 8:
 			if (pollutionAverage > 60) {
 				makeMonster();
+				disasterCount++;
 			}
 			break;
 		}
@@ -1049,6 +1057,7 @@ public class Micropolis
 				{
 					// trigger notification
 					sendMessage(MicropolisMessage.BROWNOUTS_REPORT);
+					power = false;
 					return;
 				}
 				movePowerLocation(loc, aDir);
@@ -2102,10 +2111,12 @@ public class Micropolis
 				int tile = getTile(x,y);
 				if (tile == NUCLEAR) {
 					nuclearCount++;
+					power = true;
 					powerPlants.add(new CityLocation(x,y));
 				}
 				else if (tile == POWERPLANT) {
 					coalCount++;
+					power = true;
 					powerPlants.add(new CityLocation(x,y));
 				}
 			}
@@ -2268,6 +2279,7 @@ public class Micropolis
 			setTile(x, y, (char)(FIRE + PRNG.nextInt(8)));
 			crashLocation = new CityLocation(x, y);
 			sendMessageAt(MicropolisMessage.FIRE_REPORT, x, y);
+			disasterCount++;
 		}
 	}
 
@@ -2284,6 +2296,7 @@ public class Micropolis
 				if (tile > 21 && tile < LASTZONE) {
 					setTile(x, y, (char)(FIRE + PRNG.nextInt(8)));
 					sendMessageAt(MicropolisMessage.FIRE_REPORT, x, y);
+					disasterCount++;
 					return;
 				}
 			}
@@ -2313,6 +2326,7 @@ public class Micropolis
 		int i = PRNG.nextInt(candidates.size());
 		CityLocation p = candidates.get(i);
 		doMeltdown(p.x, p.y);
+		disasterCount++;
 		return true;
 	}
 
@@ -2326,6 +2340,7 @@ public class Micropolis
 			monster.flag = false;
 			monster.destX = pollutionMaxLocationX;
 			monster.destY = pollutionMaxLocationY;
+			disasterCount++;
 			return;
 		}
 
@@ -2358,6 +2373,7 @@ public class Micropolis
 			// already have a tornado, so extend the length of the
 			// existing tornado
 			tornado.count = 200;
+			disasterCount++;
 			return;
 		}
 
@@ -2390,6 +2406,7 @@ public class Micropolis
 							sendMessageAt(MicropolisMessage.FLOOD_REPORT, xx, yy);
 							floodX = xx;
 							floodY = yy;
+							disasterCount++;
 							return;
 						}
 					}
@@ -2575,6 +2592,7 @@ public class Micropolis
 			int TM = unpoweredZoneCount + poweredZoneCount;
 			if (TM != 0) {
 				if ((double)poweredZoneCount / (double)TM < 0.7) {
+					power=false;
 					sendMessage(MicropolisMessage.BLACKOUTS);
 				}
 			}
